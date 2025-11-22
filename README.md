@@ -33,12 +33,14 @@ verificar os horários disponiveis e marcar qual se encaixa melhor em sua rotina
 ## Ester Toja
 
 # PARTICIPANTES: 
-## Gabriel Ferraz
-## Henrique de Lima
-## Henrique da Silva
-## Nicolas Fernandes
-## Pedro Arthur
-## Wesley Minto
+
+* Gabriel Ferraz
+* Henrique de Lima
+* Henrique da Silva
+* Nicolas Fernandes
+* Pedro Arthur
+* Wesley Minto
+
 
 
 
