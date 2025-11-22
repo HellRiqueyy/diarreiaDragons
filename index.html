@@ -1,11 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Index</title>
 </head>
-<body>
-    
-</body>
+
+<body id="body">
+    <div id="header-content"></div>
+ <script>
+        async function loadHeader() {
+            const response = await fetch('../contents/header.html');
+            const headerHTML = await response.text();
+            document.getElementById('header-content').innerHTML = headerHTML;
+        }
+        loadHeader(); </script>
+        
+<div class="titulo">
+    <h1 class="titulo">DICAS DE SAUDE</h1>
+</div>
+
+<div class="grade-image">
+<div class="image-p"></div>
+<div class="imgae-s"></div>
+</div>
+
+<div class="grade-baixo"></div>
+
+
+
+
+<div id="rodape-content"></div>
+    <script type="module" src=""></script>
+    <script>
+       async function loadHeader() {
+            const response = await fetch('/contents/header.html');
+            const headerHTML = await response.text();
+            document.getElementById('header-content').innerHTML = headerHTML;
+        }
+        loadHeader();
+         async function loadRodape() {
+            const response = await fetch('/contents/rodape.html');
+            const footerHTML = await response.text();
+            document.getElementById('rodape-content').innerHTML = footerHTML;
+        }
+        loadRodape();;
+        </script>
+   
+
 </html>

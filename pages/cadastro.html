@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="../css/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro</title>
+</head>
+
+<body>
+    <div id="header-content"></div>
+    <div class="container">
+        <div class="perfil">
+        </div>
+
+        <input class="input" id="nome" type="text" placeholder="NOME COMPLETO">
+        <input class="input" id="cpf" type="text" placeholder="CPF">
+        <input class="input" id="telefone" type="text" placeholder="TELEFONE">
+        <input class="input" id="email" type="email" placeholder="EMAIL">
+        <input type="file" id="upload-crm" name="imagem-crm" accept="image/*">
+            <div id="CRMText">FAÇA O UPLOAD DO CRM</div>
+
+
+            <button id="btnEnviar">Cadastrar</button>
+
+        </div>
+        <div id="rodape-content"></div>
+
+        <script type="module" src="../js/cadastro.js"></script>
+        <script>
+            async function loadHeader() {
+                const response = await fetch('../contents/header.html');
+                const headerHTML = await response.text();
+                document.getElementById('header-content').innerHTML = headerHTML;
+            }
+            loadHeader();
+            async function loadRodape() {
+                const response = await fetch('../contents/rodape.html');
+                const footerHTML = await response.text();
+                document.getElementById('rodape-content').innerHTML = footerHTML;
+            }
+            loadRodape();
+        </script>
+
+        
+        </body>dob

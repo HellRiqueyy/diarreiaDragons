@@ -1,0 +1,41 @@
+.header-content {
+    background-color: #CBD99B;
+    color: #f5f5f5;
+    position: relative;
+    max-width: 98.75rem;
+    /* Máximo de 940px */
+    width: 100%;
+    /* Ocupa 90% da tela em dispositivos menores */
+    height: 6.25rem;
+    margin: 0 auto;
+    display: flex;
+    
+}
+
+.header-content a {
+    text-decoration: none;
+    color: #f5f5f5;
+}
+
+.header-content img {
+    height: 4em;
+    padding-left: 1em
+}
+
+.header-content nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+    gap: 2.5rem; 
+    border-radius: 0.5em;
+}
+
+.header-content nav li {
+    font-size: 1.8rem;
+    transition: all 0.2s ease;
+}
+.header-content nav li:hover{
+   transform: scale(1.02);
+   text-decoration: underline;
+}

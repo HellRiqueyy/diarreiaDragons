@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Médicos</title>
+</head>
+
+<body>
+    <div id="header-content"></div>
+
+    <label for="especialidade-selecao">Selecione a especialidade do médico</label>
+    <select id="especialidade" name="especialidade">
+        <option id="especialidade"></option>
+    </select>
+
+
+    
+
+    <div id="rodape-content"></div>
+    <script type="module" src="../js/medico.js"></script>
+    <script>
+        async function loadHeader() {
+            const response = await fetch('../contents/header.html');
+            const headerHTML = await response.text();
+            document.getElementById('header-content').innerHTML = headerHTML;
+        }
+        loadHeader();
+        async function loadRodape() {
+            const response = await fetch('../contents/rodape.html');
+            const footerHTML = await response.text();
+            document.getElementById('rodape-content').innerHTML = footerHTML;
+        }
+        loadRodape();
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+</head>
+
+<body>
+    <div id="header-content"></div>
+
+    <script type="module" src="../js/login.js"></script>
+    <script>
+        async function loadHeader() {
+            const response = await fetch('../contents/header.html');
+            const headerHTML = await response.text();
+            document.getElementById('header-content').innerHTML = headerHTML;
+        }
+        loadHeader(); </script>
+   
+        <label>
+        <form>
+
+            <input type="text" placeholder="cpf" required>
+            <input type="password" placeholder="Senha" required>
+            <button type="submit">Fazer Login</button>
+
+
+
+
+
+            <form>
+        <label>
+
+
+        <script>  
+    
+         async function loadRodape() {
+            const response = await fetch('../contents/rodape.html');
+            const footerHTML = await response.text();
+            document.getElementById('rodape-content').innerHTML = footerHTML;
+        }
+        loadRodape();
+    </script>
+  
+<div id="rodape-content"></div>
+</body>
+
+</html>
