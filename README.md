@@ -6,6 +6,13 @@ Projeto desenvolvimento durante a competição de hackathon CodeCare 2.0 na Ulbr
 ## Sobre o Projeto
 Projeto desenvolvido para melhorar o agendamento de consultas, possibilitando que o paciente filtre médicos de sua região, por especialidade, selecionando o médico pode ver sua agenda com dias livres para consulta, selecionando o hórario que seja melhor. Médico possui o controle da sua agenda, podendo alterar sua agenda e marca ou desmarca as consultas.
 
+## Diagrama ER
+https://app.brmodeloweb.com/#!/publicview/69211eec39eddf537c9b01f8
+
+## Mockup
+https://www.figma.com/design/CljNnSNn0auVmU1M84eZiC/diarreia?node-id=0-1&t=HGl6ikLVtUlTzVHk-1
+https://www.figma.com/design/jdOAZLnltdZNlGgprz4RUU/Sem-t%C3%ADtulo?node-id=0-1&t=pwBORg5W1nJUY3Q4-1
+
 ## Como funciona o projeto:
 
 * Paciente:
