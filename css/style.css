@@ -8,6 +8,78 @@
     background: #CBD99B;
 }
 
+/* Dias da semana: layout, refinamento visual e animações */
+.dias-checkboxes {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px 12px;
+    margin-top: 8px;
+}
+
+.dias-checkboxes label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 10px;
+    border-radius: 8px;
+    background: rgba(203,217,155,0.08);
+    border: 1px solid rgba(203,217,155,0.18);
+    font-size: 0.95rem;
+    transition: background-color 180ms ease, transform 160ms ease, box-shadow 180ms ease, border-color 180ms ease;
+    cursor: pointer;
+}
+
+.dias-checkboxes label:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+}
+
+.dias-checkboxes input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    accent-color: #F87B1B;
+    transition: transform 140ms ease;
+}
+
+@supports(selector(:has(input:checked))) {
+    .dias-checkboxes label:has(input:checked) {
+        background: linear-gradient(180deg, rgba(248,123,27,0.08), rgba(203,217,155,0.06));
+        border-color: rgba(248,123,27,0.35);
+        transform: translateY(-2px) scale(1.01);
+        box-shadow: 0 12px 30px rgba(248,123,27,0.06);
+        animation: check-pop 240ms cubic-bezier(.2,.9,.2,1);
+    }
+}
+
+.dias-checkboxes input[type="checkbox"]:checked {
+    transform: scale(1.12);
+}
+
+@keyframes check-pop {
+    0% { transform: scale(0.98); opacity: 0.6; }
+    60% { transform: scale(1.06); opacity: 1; }
+    100% { transform: scale(1.01); opacity: 1; }
+}
+
+/* responsividade */
+@media (max-width: 700px){
+    .dias-checkboxes { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 420px){
+    .dias-checkboxes { grid-template-columns: 1fr; }
+}
+
+/* estilo do checkbox 'selecionar todos' (legend + first label) */
+fieldset.input > label:first-of-type {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+}
+
+.error { margin-top: 6px; color: #c0392b; }
+
 .uploads {
     width: 90%;
     margin-top: 260px;
@@ -112,3 +184,26 @@ select {
 
 /*login*/
 
+.logs{
+    width: 80%;
+    margin-top: 15px;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #CBD99B;
+    background: #CBD99B;
+    margin-left: 95px;
+}
+
+.logss{
+     width: 81.5%;
+    margin-top: 15px;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #CBD99B;
+    background: #CBD99B;
+    margin-left: 95px;
+}
+
+#title_login{
+    text-align: center;
+}

@@ -5,84 +5,120 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agenda</title>
-
-   
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-
     <link rel="stylesheet" href="../css/style.css">
+
 </head>
 
-<body class="bg-light">
-    <select name="medicos" id="medicos">
+<body>
+    <div id="header-content"> </div>
+        <div class="container py-5">
 
-    </select>
+            <div class="text-center mb-4">
+                <h1 class="fw-bold">Escolher data</h1>
 
-   
-</div>
+                <fieldset id="agenda-dias-fieldset" style="max-width:900px;margin:12px auto;">
+                    <legend>Filtrar por dia da semana</legend>
+                    <div class="dias-checkboxes" style="display:flex;flex-wrap:wrap;gap:8px;">
+                        <label><input type="checkbox" name="agenda-dias" value="segunda" id="agenda-dia-seg">
+                            Segunda</label>
+                        <label><input type="checkbox" name="agenda-dias" value="terca" id="agenda-dia-ter">
+                            Terça</label>
+                        <label><input type="checkbox" name="agenda-dias" value="quarta" id="agenda-dia-qua">
+                            Quarta</label>
+                        <label><input type="checkbox" name="agenda-dias" value="quinta" id="agenda-dia-qui">
+                            Quinta</label>
+                        <label><input type="checkbox" name="agenda-dias" value="sexta" id="agenda-dia-sex">
+                            Sexta</label>
+                        <label><input type="checkbox" name="agenda-dias" value="sabado" id="agenda-dia-sab">
+                            Sábado</label>
+                        <label><input type="checkbox" name="agenda-dias" value="domingo" id="agenda-dia-dom">
+                            Domingo</label>
+                    </div>
+                </fieldset>
 
-    
-    <div id="header-content"></div>
 
-    <div class="container py-5">
+                <label for="especialidade-selecao">Selecione a especialidade do médico</label>
+                <select id="especialidade" name="especialidade">
+                    <option id="especialidade"></option>
+                    <option id="especialidade">Alergia e Imunologia</option>
+                    <option id="especialidade">Anestesiologia</option>
+                    <option id="especialidade">Angiologia</option>
+                    <option id="especialidade">Cardiologia</option>
+                    <option id="especialidade">Cirurgia Cardiovascular</option>
+                    <option id="especialidade">Cirurgia da Mão</option>
+                    <option id="especialidade">Cirurgia de Cabeça e Pescoço</option>
+                    <option id="especialidade">Cirurgia Geral</option>
+                    <option id="especialidade">Cirurgia Pediátrica</option>
+                    <option id="especialidade">Cirurgia Plástica</option>
+                    <option id="especialidade">Cirurgia Torácica</option>
+                    <option id="especialidade">Cirurgia Vascular</option>
+                    <option id="especialidade">Coloproctologia</option>
+                    <option id="especialidade">Dermatologia</option>
+                    <option id="especialidade">Endocrinologia e Metabologia</option>
+                    <option id="especialidade">Gastroenterologia</option>
+                    <option id="especialidade">Genética Médica</option>
+                    <option id="especialidade">Geriatria</option>
+                    <option id="especialidade">Ginecologia e Obstetrícia</option>
+                    <option id="especialidade">Hematologia</option>
+                    <option id="especialidade">Hepatologia</option>
+                    <option id="especialidade">Infectologia</option>
+                    <option id="especialidade">Mastologia</option>
+                    <option id="especialidade">Medicina de Emergência</option>
+                    <option id="especialidade">Medicina de Família e Comunidade</option>
+                    <option id="especialidade">Medicina do Esporte</option>
+                    <option id="especialidade">Medicina do Trabalho</option>
+                    <option id="especialidade">Medicina Física e Reabilitação</option>
+                    <option id="especialidade">Medicina Intensiva</option>
+                    <option id="especialidade">Medicina Legal e Perícia Médica</option>
+                    <option id="especialidade">Medicina Nuclear</option>
+                    <option id="especialidade">Medicina Preventiva e Social</option>
+                    <option id="especialidade">Nefrologia</option>
+                    <option id="especialidade">Neurocirurgia</option>
+                    <option id="especialidade">Neurologia</option>
+                    <option id="especialidade">Nutrologia</option>
+                    <option id="especialidade" ion>Oftalmologia</option>
+                    <option id="especialidade">Oncologia</option>
+                    <option id="especialidade">Ortopedia e Traumatologia</option>
+                    <option id="especialidade">Otorrinolaringologia</option>
+                    <option id="especialidade">Patologia</option>
+                    <option id="especialidade">Pediatria</option>
+                    <option id="especialidade">Pneumologia</option>
+                    <option id="especialidade">Psiquiatria</option>
+                    <option id="especialidade">Radiologia e Diagnóstico por Imagem</option>
+                    <option id="especialidade">Reumatologia</option>
+                    <option id="especialidade">Urologia</option>
+                </select>
+                <div class="text-center">
+                    <h2 class="fw-semibold">Selecione o Profissional</h2>
+                </div>
 
-        <div class="text-center mb-4">
-            <h1 class="fw-bold">Escolher data</h1>
+                <div id="medicos-list" class="medicos-list" style="max-width:900px;margin:0 auto 24px auto;"></div>
 
-           
-            <input 
-                class="form-control mx-auto mt-3 bg-success-subtle" 
-                type="date" 
-                id="data-agenda"
-                style="max-width: 250px; border-radius: 12px;"
-            >
-        </div>
 
-        <div class="text-center">
-            <h2 class="fw-semibold">Selecione o Profissional</h2>
-        </div>
 
-    </div>
+                <div id="rodape-content"></div>
 
-    
-    <div id="rodape-content"></div>
 
-    
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+                <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
-    
-    <script type="module" src="../js/agenda.js"></script>
 
-    <script>
-        
-        async function loadHeader() {
-            const response = await fetch('../contents/header.html');
-            document.getElementById('header-content').innerHTML = await response.text();
-        }
-        loadHeader();
+                <script type="module" src="../js/agenda.js"></script>
 
-        async function loadRodape() {
-            const response = await fetch('../contents/rodape.html');
-            document.getElementById('rodape-content').innerHTML = await response.text();
-        }
-        loadRodape();
-    </script>
- <div class="slider">
-    <div class="slide-track">
+                <script>
 
-      
-        <div class="card"><img src="logo1.png"></div>
-        <div class="card"><img src="logo2.png"></div>
-        <div class="card"><img src="logo3.png"></div>
-        <div class="card"><img src="logo4.png"></div>
-        <div class="card"><img src="logo5.png"></div>
+                    async function loadHeader() {
+                        const response = await fetch('../contents/header.html');
+                        document.getElementById('header-content').innerHTML = await response.text();
+                    }
+                    loadHeader();
 
-        
-        <div class="card"><img src="logo1.png"></div>
-        <div class="card"><img src="logo2.png"></div>
-        <div class="card"><img src="logo3.png"></div>
-        <div class="card"><img src="logo4.png"></div>
-        <div class="card"><img src="logo5.png"></div>
-
-    </div>
+                    async function loadRodape() {
+                        const response = await fetch('../contents/rodape.html');
+                        document.getElementById('rodape-content').innerHTML = await response.text();
+                    }
+                    loadRodape();
+                </script>
 </body>
+
 </html>
