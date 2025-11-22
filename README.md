@@ -1,5 +1,10 @@
 # PROJETO AUTOAGENDAMENTO DE EXAMES
 
+## Descrição
+Projeto desenvolvimento durante a competição de hackathon CodeCare 2.0 na Ulbra São Lucas, com foco de desenvolver melhorarias na areá de cuidado.
+
+## Sobre o Projeto
+Projeto desenvolvido para melhorar o agendamento de consultas, possibilitando que o paciente filtre médicos de sua região, por especialidade, selecionando o médico pode ver sua agenda com dias livres para consulta, selecionando o hórario que seja melhor. Médico possui o controle da sua agenda, podendo alterar sua agenda e marca ou desmarca as consultas.
 
 ## Como funciona o projeto:
 
