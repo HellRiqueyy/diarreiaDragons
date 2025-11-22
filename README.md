@@ -32,4 +32,15 @@ verificar os horários disponiveis e marcar qual se encaixa melhor em sua rotina
 # MENTOR ESCOLHIDO: 
 ## Ester Toja
 
+# PARTICIPANTES: 
+## Gabriel Ferraz
+## Henrique de Lima
+## Henrique da Silva
+## Nicolas Fernandes
+## Pedro Arthur
+## Wesley Minto
+
+
+
+
 
