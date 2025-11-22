@@ -1,0 +1,57 @@
+/*login*/
+button:hover{
+    transform: background-color 0.3s ease;
+    background-color: rgb(67, 67, 255);
+    cursor: pointer;
+}
+
+
+.logs{
+    width: 80%;
+    margin-top: 15px;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #CBD99B;
+    background: #CBD99B;
+    margin-left: 95px;
+}
+
+.login_cliente{
+    width: 81.5%;
+    margin-top: 15px;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #253900;
+    background: #416301;
+    margin-left: 95px;
+    color: #EEEEEE;
+    transition: all 0.3s ease;
+}
+
+#title_login{
+    margin-left: 600px;
+}
+
+/*Cadastrar*/
+
+.cadastro{
+    width: 15%;
+    margin-top: 15px;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #253900;
+    background: #747474;
+    margin-left: 95px;
+    color: #EEEEEE;
+}
+
+.cadas{
+    width: 81.5%;
+    margin-top: 15px;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #253900;
+    background: #747474;
+    margin-left: 95px;
+    color: #EEEEEE;
+}

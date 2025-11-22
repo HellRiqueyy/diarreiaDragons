@@ -1,10 +1,49 @@
-# PROJETO AUTOAGENDAMENTO DE EXAMES
+# Projeto Autoagendamento de Consultas
 
 ## Descrição
-Projeto desenvolvimento durante a competição de hackathon CodeCare 2.0 na Ulbra São Lucas, com foco de desenvolver melhorarias na areá de cuidado.
+Aplicação web para permitir que pacientes encontrem médicos por especialidade, visualizem horários disponíveis e agendem consultas. Médicos podem cadastrar sua disponibilidade (dias e horários) e receber avaliações dos pacientes.
 
-## Sobre o Projeto
-Projeto desenvolvido para melhorar o agendamento de consultas, possibilitando que o paciente filtre médicos de sua região, por especialidade, selecionando o médico pode ver sua agenda com dias livres para consulta, selecionando o hórario que seja melhor. Médico possui o controle da sua agenda, podendo alterar sua agenda e marca ou desmarca as consultas.
+## Recursos principais
+- Cadastro de pacientes e médicos (cliente-side, Firestore).
+- Login por CPF + senha (busca nas coleções `medicos` e `paciente`).
+- Médico: define dias da semana e horários (intervalos de 30 minutos).
+- Agenda: filtrar médicos por especialidade e dia, classificar por avaliação.
+- Agendamento: escolher médico, data e horário; verificação para evitar duplicatas.
+- Avaliações: pacientes podem avaliar médicos (1–5 estrelas); recomendações por especialidade.
+
+## Tecnologias utilizadas
+
+* HTML5
+* CSS
+* JavaScript
+* Firebase
+
+## Estrutura do projeto
+- `index.html` – landing page
+- `pages/` – páginas principais (`login.html`, `agenda.html`, `cadastroMedico.html`, `cadastroPaciente.html`, `cadastroConsulta.html`, `medico.html`)
+- `js/` – scripts do cliente (ex.: `login.js`, `cadastroMedico.js`, `cadastroConsulta.js`, `agenda.js`, `firebaseConfig.js`)
+- `css/` – estilos (ex.: `style.css`)
+- `assets/` – imagens e recursos estáticos
+
+## Firestore — coleções e esquema esperado
+- `medicos`:
+  - `nome` (string)
+  - `cpf` (string)
+  - `telefone` (string)
+  - `especialidade` (string)
+  - `dias` (array de strings, ex.: `['segunda','terça']`)
+  - `horarios` (array de strings, ex.: `['08:00','08:30', ...]`)
+  - `senha` (string) — atualmente armazenada em texto; ver nota de segurança abaixo
+
+- `paciente`:
+  - `nome`, `cpf`, `telefone`, ...
+
+- `consultas`:
+  - `medicoId`, `medicoNome`, `date` (YYYY-MM-DD), `time` (HH:MM), `pacienteNome`, `pacienteCpf`, `createdAt`
+
+- `avaliacoes`:
+  - `medicoId`, `score` (number 1–5), `createdAt`
+
 
 ## Diagrama ER
 https://app.brmodeloweb.com/#!/publicview/69211eec39eddf537c9b01f8
@@ -13,15 +52,8 @@ https://app.brmodeloweb.com/#!/publicview/69211eec39eddf537c9b01f8
 https://www.figma.com/design/CljNnSNn0auVmU1M84eZiC/diarreia?node-id=0-1&t=HGl6ikLVtUlTzVHk-1
 https://www.figma.com/design/jdOAZLnltdZNlGgprz4RUU/Sem-t%C3%ADtulo?node-id=0-1&t=pwBORg5W1nJUY3Q4-1
 
-## Como funciona o projeto:
 
-* Paciente:
-  Abra o link do projeto em seu navegador, cadastre-se ou faça login, filtre o méedico pela sua especialidade ou
-nome e agende sua consulta.
 
-* Médico:
-  Abra o link em seu navegador, cadastre-se ou faça login, aguarde a confirmação da veracidade de sua crm, edite
-seus horários disponíveis para o próximo mês e confirme a alteração.
 
 ## Solução:
 
@@ -31,18 +63,11 @@ verificar os horários disponiveis e marcar qual se encaixa melhor em sua rotina
 
 # MENTOR ESCOLHIDO: 
 ## Ester Toja
-
-# PARTICIPANTES: 
-
-* Gabriel Ferraz
-* Henrique de Lima
-* Henrique da Silva
-* Nicolas Fernandes
-* Pedro Arthur
-* Wesley Minto
-
-
-
-
-
-
+ 
+## Contribuidores
+- Gabriel Ferraz
+- Henrique de Lima
+- Henrique da Silva
+- Nicolas Fernandes
+- Pedro Arthur
+- Wesley Minto

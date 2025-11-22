@@ -1,6 +1,6 @@
 
 import { db } from './firebaseConfig.js';
-import { collection, query, where, getDocs, orderBy } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
+import { collection, query, where, getDocs, orderBy, addDoc } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
 
 function el(id){ return document.getElementById(id); }
 
@@ -9,11 +9,57 @@ async function fetchMedicosByEspecialidade(espec){
 	try{
 		const q = query(collection(db, 'medicos'), where('especialidade','==',espec));
 		const snap = await getDocs(q);
-		return snap.docs.map(d => ({ id: d.id, ...d.data() }));
+		let medicos = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+		// attach ratings (avg and count)
+		medicos = await attachRatings(medicos);
+		// sort by average rating desc
+		medicos.sort((a,b)=> (b.ratingAvg || 0) - (a.ratingAvg || 0));
+		return medicos;
 	} catch(err){
 		console.error('Erro buscando médicos:', err);
 		return [];
 	}
+}
+
+async function attachRatings(medicos){
+	if(!medicos || medicos.length === 0) return medicos;
+	const ids = medicos.map(m=>m.id);
+	let avals = [];
+	try{
+		if(ids.length <= 10){
+			const q = query(collection(db,'avaliacoes'), where('medicoId','in', ids));
+			const snap = await getDocs(q);
+			avals = snap.docs.map(d=> ({ id: d.id, ...d.data() }));
+		} else {
+			// fallback: fetch all avaliações and filter client-side
+			const snap = await getDocs(collection(db,'avaliacoes'));
+			avals = snap.docs.map(d=> ({ id: d.id, ...d.data() }));
+			avals = avals.filter(a=> ids.includes(a.medicoId));
+		}
+	} catch(e){ console.error('Erro buscando avaliacoes', e); }
+
+	const map = {};
+	avals.forEach(a=>{
+		if(!map[a.medicoId]) map[a.medicoId] = { sum:0, count:0 };
+		map[a.medicoId].sum += (a.score || 0);
+		map[a.medicoId].count += 1;
+	});
+
+	return medicos.map(m => {
+		const entry = map[m.id];
+		if(entry){ m.ratingAvg = +(entry.sum / entry.count).toFixed(2); m.ratingCount = entry.count; }
+		else { m.ratingAvg = 0; m.ratingCount = 0; }
+		return m;
+	});
+}
+
+async function submitRating(medicoId, score){
+	try{
+		await addDoc(collection(db,'avaliacoes'), { medicoId, score: Number(score), createdAt: new Date().toISOString() });
+		// refresh current list
+		await onEspecialidadeChange();
+		alert('Obrigado pela avaliação!');
+	} catch(e){ console.error('Erro ao enviar avaliacao', e); alert('Erro ao enviar avaliação.'); }
 }
 
 function populateMedicosSelect(medicos){
@@ -32,6 +78,18 @@ function populateMedicosSelect(medicos){
 	});
 }
 
+function generateStarsHtml(avg){
+	// avg between 0 and 5, show 5 stars, filled for each integer part, half not used for simplicity
+	const rounded = Math.round(avg);
+	let html = '<span class="stars" style="color:#F87B1B;">';
+	for(let i=1;i<=5;i++){
+		if(i<=rounded) html += `<span data-star="${i}" style="cursor:pointer; margin-right:2px;">★</span>`;
+		else html += `<span data-star="${i}" style="cursor:pointer; color:#ccc; margin-right:2px;">★</span>`;
+	}
+	html += '</span>';
+	return html;
+}
+
 function renderMedicosList(medicos){
 	const container = el('medicos-list');
 	if(!container) return;
@@ -47,23 +105,35 @@ function renderMedicosList(medicos){
 		card.className = 'card p-3';
 		card.style.width = '220px';
 		card.style.cursor = 'pointer';
+		// mostrar nome em destaque, especialidade abaixo, e média de avaliação
+		const avg = m.ratingAvg ? Number(m.ratingAvg) : 0;
+		const count = m.ratingCount || 0;
+		// cria estrelas visual
+		const starsHtml = generateStarsHtml(avg);
 		card.innerHTML = `
-			<div class="fw-bold">${m.nome || '—'}</div>
-			<div style="font-size:0.9rem;color:#666">${m.especialidade || ''}</div>
-			<div style="margin-top:8px;font-size:0.85rem;color:#444">${m.telefone ? m.telefone : ''}</div>
-			<div style="margin-top:8px;font-size:0.85rem;color:#444">Horários: ${m.horarios && m.horarios.length ? m.horarios.slice(0,4).join(', ') + (m.horarios.length>4? '...' : '') : 'não informado'}</div>
+			<div class="fw-bold" style="font-size:1.06rem;">${m.nome || '—'}</div>
+			<div style="font-size:0.95rem;color:#666">${m.especialidade || ''}</div>
+			<div style="margin-top:8px;">${starsHtml} <small style="color:#666;margin-left:6px;">(${count})</small></div>
 		`;
-		// clique no card: salvar médico selecionado e redirecionar para cadastroConsulta
-		card.addEventListener('click', ()=>{
+
+		// adicionar evento para avaliar (delegação por data-* em cada estrela)
+		card.addEventListener('click', (ev)=>{
+			// se clicou em estrela, tratar avaliação
+			const star = ev.target.closest('[data-star]');
+			if(star){
+				ev.stopPropagation();
+				const score = star.getAttribute('data-star');
+				submitRating(m.id, score);
+				return;
+			}
+			// caso contrário, comportamento antigo: selecionar médico e abrir pagina de agendamento
 			try{
 				const minimal = { id: m.id, nome: m.nome || '', especialidade: m.especialidade || '', telefone: m.telefone || '', horarios: m.horarios || [], dias: m.dias || [] };
 				sessionStorage.setItem('selectedMedico', JSON.stringify(minimal));
-				// também enviar via query param o id como fallback
 				window.location.href = 'cadastroConsulta.html?id=' + encodeURIComponent(m.id);
-			} catch(e){
-				console.error('Erro ao selecionar médico', e);
-			}
+			} catch(e){ console.error('Erro ao selecionar médico', e); }
 		});
+
 		row.appendChild(card);
 	});
 	container.appendChild(row);
@@ -74,11 +144,13 @@ async function onEspecialidadeChange(){
 	if(!sel) return;
 	const espec = sel.value && sel.value.trim() ? sel.value.trim() : '';
 	let medicos = await fetchMedicosByEspecialidade(espec);
+
 	// aplicar filtro por dias selecionados (se houver)
 	const selectedDays = getSelectedWeekdays();
 	if(selectedDays && selectedDays.length){
 		medicos = medicos.filter(m => Array.isArray(m.dias) && m.dias.some(d => selectedDays.includes(d)));
 	}
+    // medicos já vêm ordenados por ratingAvg (feito em fetchMedicosByEspecialidade)
 	populateMedicosSelect(medicos);
 	renderMedicosList(medicos);
 }

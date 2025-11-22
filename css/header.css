@@ -1,5 +1,5 @@
 .header-content {
-    background-color: #CBD99B;
+    background-color: #08CB00;
     color: #f5f5f5;
     position: relative;
     max-width: 98.75rem;
@@ -9,12 +9,13 @@
     height: 6.25rem;
     margin: 0 auto;
     display: flex;
-    
+    justify-content: space-around;  
 }
 
 .header-content a {
     text-decoration: none;
     color: #f5f5f5;
+    text-align: center;
 }
 
 .header-content img {
@@ -38,4 +39,16 @@
 .header-content nav li:hover{
    transform: scale(1.02);
    text-decoration: underline;
+}
+
+
+.op{
+    margin-left: auto;
+    padding-right: 2em;
+    background-color: #253900;
+    border-radius: 0.5em;
+    padding: 5px 1em;
+}
+.nav {
+    text-align: center;
 }

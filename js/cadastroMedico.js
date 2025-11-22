@@ -1,5 +1,5 @@
 import { db } from './firebaseConfig.js';
-import { collection, addDoc } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
+import { doc, setDoc } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
 
 
 function getInput(){
@@ -96,11 +96,26 @@ document.addEventListener('DOMContentLoaded', ()=>{
         console.log("Dados", dados)
 
         try{
-            const ref = await addDoc(collection(db, "medicos"), dados)
-            console.log("ID do documento", ref.id)
-            alert("Cadastro com sucesso")
+            // usa o CPF (apenas dígitos) como ID do documento
+            const cpfDigits = dados.cpf.replace(/\D/g, '');
+            if(!cpfDigits) return alert('CPF inválido');
+            const docRef = doc(db, 'medicos', cpfDigits);
+            // salvar dados básicos e as preferências de disponibilidade
+            const payload = {
+                nome: dados.nome,
+                cpf: cpfDigits,
+                telefone: dados.telefone,
+                email: dados.email,
+                crm: dados.crm,
+                especialidade: dados.especialidade,
+                dias: dados.dias || [],
+                horarios: dados.horarios || []
+            };
+            await setDoc(docRef, payload, { merge: true });
+            alert('Cadastro com sucesso');
         } catch (e){
             console.log("Erro", e)
+            alert('Erro ao cadastrar. Veja console.');
         }
 
     })
