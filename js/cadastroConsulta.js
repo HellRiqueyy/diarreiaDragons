@@ -3,5 +3,8 @@ import { collection, addDoc } from "https://www.gstatic.com/firebasejs/11.6.0/fi
 
 
 
-
-
+function getInput(){
+    return{
+    
+    }
+} 
