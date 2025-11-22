@@ -22,14 +22,14 @@ button:hover{
     padding: 10px;
     border-radius: 8px;
     border: 1px solid #253900;
-    background: #416301;
+    background: hsl(81, 98%, 20%);
     margin-left: 95px;
     color: #EEEEEE;
     transition: all 0.3s ease;
 }
 
 #title_login{
-    margin-left: 600px;
+    margin-left: 44.1%;
 }
 
 /*Cadastrar*/
@@ -46,12 +46,12 @@ button:hover{
 }
 
 .cadas{
-    width: 81.5%;
+    width: 91.5%;
     margin-top: 15px;
     padding: 10px;
     border-radius: 8px;
     border: 1px solid #253900;
-    background: #747474;
-    margin-left: 95px;
+    background: hsl(81, 98%, 20%);
+    
     color: #EEEEEE;
 }

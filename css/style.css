@@ -94,13 +94,15 @@ fieldset.input > label:first-of-type {
     margin-top: 13px;
     padding: 10px;
     border-radius: 8px;
-    border: 1px solid #F87B1B;
-    background: #F87B1B;
+    border: 1px solid #08CB00;
+    background: #08CB00;
+    color: black;
+    font-size: bold;
 }
 
 .btn:hover{
-    background-color: #CBD99B;
-    color: #F87B1B;
+    background-color: #2eb7e5;
+
     cursor: pointer;
 }
 
@@ -181,7 +183,7 @@ select {
     100% { transform: translateX(-50%); }
 }
 
-/*cadastro*/
+
 
 
 
@@ -227,7 +229,43 @@ select {
     100% { transform: translateX(-50%); }
 }
 .dicas {
+    margin-left: 150px;
+    margin-top: 20px;
+    margin-bottom: 40px;
+}
+
+
+
+
+
+
+.recomendação {
+    margin-left: 150px;
+    margin-top: 20px;
     
-    border: gray;
-    align-self: center;
+}
+.btn-agendar {
+    color: rgb(39, 118, 184);
+}
+
+.dicas{
+    background-color: #dcdcdc;
+    margin-right: 10em;
+    border-radius: 1em;
+    padding: 1em;
+}
+
+.dicas h1 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    text-align: center;
+}
+.dicas ul {
+    list-style-type: disc;
+    padding-left: 20px;
+}
+.dicas li {
+    margin-bottom: 8px;
+    font-size: 1rem;
+    line-height: 1.5;
 }
