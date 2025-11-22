@@ -38,11 +38,8 @@ button:hover{
     width: 15%;
     margin-top: 15px;
     padding: 10px;
-    border-radius: 8px;
-    border: 1px solid #253900;
-    background: #747474;
     margin-left: 95px;
-    color: #EEEEEE;
+    color: black;
 }
 
 .cadas{
