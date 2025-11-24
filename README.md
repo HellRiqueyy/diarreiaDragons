@@ -1,69 +1,111 @@
-# Autoagendamento de Consultas
+# Projeto Autoagendamento de Consultas
 
-Breve README com instruções para executar e testar o projeto localmente.
+## Descrição
+Aplicação web para permitir que pacientes encontrem médicos por especialidade, visualizem horários disponíveis e agendem consultas. Médicos podem cadastrar sua disponibilidade (dias e horários) e receber avaliações dos pacientes.
 
-**Descrição:**
-- Aplicação web para pacientes encontrarem médicos por especialidade, visualizarem horários disponíveis e agendarem consultas. Médicos podem informar disponibilidade e pacientes podem avaliar atendimentos.
+## Recursos principais
+- Cadastro de pacientes e médicos (cliente-side, Firestore).
+- Login por CPF + senha (busca nas coleções `medicos` e `paciente`).
+- Médico: define dias da semana e horários (intervalos de 30 minutos).
+- Agenda: filtrar médicos por especialidade e dia, classificar por avaliação.
+- Agendamento: escolher médico, data e horário; verificação para evitar duplicatas.
+- Avaliações: pacientes podem avaliar médicos (1–5 estrelas); recomendações por especialidade.
 
-**Status atual:**
-- Frontend: páginas estáticas em `pages/` e scripts em `js/`.
-- Backend: `server/` com Node.js + Express e banco local `SQLite` (`server/data.sqlite`).
+## Tecnologias utilizadas
 
-**Requisitos**
-- Node.js (v14+ recomendado)
-- npm
+- HTML5
+- CSS
+- JavaScript
+- Node.js + Express (backend)
+- SQLite3 (banco local) — substituiu o uso anterior do Firebase/Firestore
 
-**Instalação e execução (desenvolvimento)**
-- Instalar dependências do backend:
+## Estrutura de pastas
 
-```
+Resumo das pastas e arquivos principais:
+
+- `index.html` — landing page
+- `pages/` — páginas do frontend
+	- `login.html` — tela de login
+	- `cadastroPaciente.html` — cadastro de pacientes
+	- `cadastroMedico.html` — cadastro de médicos
+	- `agenda.html` — visualização de agenda / busca de médicos
+- `js/` — scripts do cliente (ex.: `login.js`, `cadastroPaciente.js`, `api.js`, `agenda.js`)
+- `css/` — arquivos de estilo (`style.css`, `login.css`, `rodape.css`, etc.)
+- `assets/` — imagens e recursos (pasta `img/`)
+- `contents/` — trechos HTML reutilizáveis (`header.html`, `rodape.html`)
+- `server/` — backend em Node.js + Express
+	- `server.js` — servidor e rotas API
+	- `db.js` — inicialização e schema SQLite
+	- `package.json` — dependências e scripts do backend
+	- `data.sqlite` — arquivo do banco (gerado em runtime)
+
+## Como executar (desenvolvimento)
+
+1. Pré-requisitos
+	 - Node.js (v14+ recomendado)
+	 - npm
+
+2. Instalar dependências do backend
+
+```powershell
 cd server
 npm install
 ```
 
-- Iniciar o servidor (API + arquivos estáticos):
+3. Iniciar o servidor (API + arquivos estáticos)
 
-```
+```powershell
 cd server
 node .\server.js
+# ou, se preferir adicionar script start no package.json:
+# npm start
 ```
 
-- Abra as páginas do frontend no navegador apontando para os arquivos em `pages/` (ex.: `pages/login.html`) ou acesse `http://localhost:3000/pages/login.html` caso o servidor esteja rodando e servindo o diretório raiz.
+4. Abrir o frontend
 
-**Como testar cadastro de paciente / login**
-- Página de cadastro: `pages/cadastroPaciente.html` — preencha `nome`, `cpf`, `telefone`, `email`, `senha` e clique em `Cadastrar`.
-- Página de login: `pages/login.html` — informe `cpf` e `senha`.
-- O servidor expõe os endpoints REST em `/api/*` (veja a seção abaixo).
+- Se o servidor estiver rodando, abra no navegador: `http://localhost:3000/pages/login.html` (ou outra página em `pages/`).
+- Alternativamente, abra os arquivos HTML diretamente no navegador (`pages/*.html`) para testes estáticos, mas alguns recursos (como chamadas `fetch` para `/api/*`) requerem o servidor em execução.
 
-**Endpoints importantes (resumo)**
-- `POST /api/paciente` — cria ou atualiza paciente. Body JSON: `{ nome, cpf, telefone, email, senha }`.
-- `GET /api/paciente/:cpf` — recuperar paciente por CPF.
-- `POST /api/login` — login com `{ cpf, senha }`. Verifica médicos e pacientes.
-- `POST /api/consultas` — criar consulta.
-- `GET /api/medicos` — listar médicos.
+## Testes rápidos
 
-**Banco de dados**
-- O arquivo SQLite é `server/data.sqlite` (gera automaticamente na primeira execução se não existir).
-- O schema é inicializado em `server/db.js`. Se você atualizar o schema, reinicie o servidor para aplicar alterações.
+- Cadastro de paciente: `pages/cadastroPaciente.html` — preencha `nome`, `cpf`, `telefone`, `email`, `senha` e clique em `Cadastrar`.
+- Login: `pages/login.html` — informe `cpf` e `senha`.
+- Verifique os registros no banco (opcional):
 
-**Segurança (observações importantes)**
-- Atualmente as senhas são armazenadas em texto puro no banco. Para produção, implemente hashing (ex.: `bcrypt`) antes de salvar e compare hashes no login. Posso ajudar a implementar isso.
+```powershell
+cd server
+sqlite3 .\data.sqlite
+# no prompt sqlite> execute, por exemplo:
+SELECT id,nome,cpf,telefone,email FROM paciente ORDER BY id DESC LIMIT 10;
+.exit
+```
 
-**Estrutura do projeto (resumida)**
-- `index.html` — página principal
-- `pages/` — páginas do app (`login.html`, `cadastroPaciente.html`, `agenda.html`, etc.)
-- `js/` — scripts do cliente (`login.js`, `cadastroPaciente.js`, `api.js`, ...)
-- `css/` — estilos
-- `server/` — backend Express + SQLite
+## Observações de segurança
 
-**Contribuidores**
+- Senhas são atualmente armazenadas em texto plano. Para produção, implemente hashing (ex.: `bcrypt`) antes de salvar e compare hashes no login.
+
+
+
+## Diagrama ER
+https://app.brmodeloweb.com/#!/publicview/69211eec39eddf537c9b01f8
+
+## Mockup
+https://www.figma.com/design/CljNnSNn0auVmU1M84eZiC/diarreia?node-id=0-1&t=HGl6ikLVtUlTzVHk-1
+https://www.figma.com/design/jdOAZLnltdZNlGgprz4RUU/Sem-t%C3%ADtulo?node-id=0-1&t=pwBORg5W1nJUY3Q4-1
+
+
+## Solução:
+
+Esta é uma aplicação web feita em JS que permite os usuários marcarem suas próprias consultas, onde os médicos
+poderão cadastrar a disponibilidade de sua agenda para o próximo mês e os pacientes utilizarão esta agenda para
+verificar os horários disponiveis e marcar qual se encaixa melhor em sua rotina. 
+
+# MENTOR ESCOLHIDO: 
+## Ester Toja
+
+## Contribuidores
 - Gabriel Ferraz
 - Henrique de Lima
 - Henrique da Silva
 - Nicolas Fernandes
 - Pedro Arthur
-- Wesley Minto
-
----
-
-Se quiser, atualizo este README com instruções mais detalhadas (ex.: como rodar em Docker, como exportar/inspecionar o SQLite, ou adicionar scripts `npm start`). Deseja que eu adicione instruções para rodar com `npm start` e um script de inicialização no `package.json` do `server/`?
