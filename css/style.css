@@ -70,7 +70,6 @@
     .dias-checkboxes { grid-template-columns: 1fr; }
 }
 
-/* estilo do checkbox 'selecionar todos' (legend + first label) */
 fieldset.input > label:first-of-type {
     display: inline-flex;
     align-items: center;
@@ -107,7 +106,13 @@ fieldset.input > label:first-of-type {
 }
 
 .container {
-    margin-left: 150px;
+    margin-left: 0;
+    max-width: 900px;
+    margin-right: auto;
+    margin-left: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 select {
@@ -131,17 +136,19 @@ select {
 /*agenda*/
 
 .data {
-    background-color: #CBD99B !important;
+    background-color: transparent !important;
     height: 50px;
     border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.tituloData {
-    font-family: Arial, sans-serif;
-}
-
-.body {
-    background-color: #EEEEEE;
+.container.py-5 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 /*efeito*/
@@ -177,95 +184,206 @@ select {
     max-width: 90%;
 }
 
+/*campos header e rodape*/
 
-@keyframes scroll {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
-}
-
-
-
-
-
-
-
-/* efeito */
-
-.slider {
-    overflow: hidden;
-    white-space: nowrap;
+#header-content {
+    background-color: #08CB00; /* verde do header */
+    color: #f5f5f5;
+    max-width: 98.75rem;
     width: 100%;
-    padding: 20px 0;
-}
-
-.slide-track {
+    height: 6.25rem;
+    margin: 0 auto;
     display: flex;
-    width: calc(250px * 10); /* largura = card * quantidade */
-    animation: scroll 25s linear infinite;
+    justify-content: space-around;  
+    align-items: center;
+    position: relative;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.card {
-    background: #f7f7f9;
-    padding: 20px;
-    margin: 0 15px;
-    border-radius: 20px;
-    width: 250px;
-    height: 100px;
+#header-content a {
+    text-decoration: none;
+    color: #f5f5f5;
+    text-align: center;
+}
+
+#header-content img {
+    height: 4em;
+    padding-left: 1em;
+}
+
+#header-content nav {
     display: flex;
     justify-content: center;
     align-items: center;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    list-style: none;
+    gap: 2.5rem; 
+    border-radius: 0.5em;
 }
 
-.card img {
-    max-height: 250%;
-    border-radius: 20px;
-    max-width: 120%;
+#header-content nav li {
+    font-size: 1.8rem;
+    transition: all 0.2s ease;
 }
 
-/* Animação da esquerda para a direita */
-@keyframes scroll {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
-}
-.dicas {
-    margin-left: 150px;
-    margin-top: 20px;
-    margin-bottom: 40px;
+#header-content nav li:hover {
+    transform: scale(1.02);
+    text-decoration: underline;
 }
 
-
-
-
-
-
-.recomendação {
-    margin-left: 150px;
-    margin-top: 20px;
-    
-}
-.btn-agendar {
-    color: rgb(39, 118, 184);
+/* Estilos para opções especificas no header */
+#header-content .op {
+    margin-left: auto;
+    padding-right: 2em;
+    background-color: #253900;
+    border-radius: 0.5em;
+    padding: 5px 1em;
 }
 
-.dicas{
-    background-color: #dcdcdc;
-    margin-right: 10em;
-    border-radius: 1em;
-    padding: 1em;
-}
 
-.dicas h1 {
-    font-size: 2rem;
-    margin-bottom: 10px;
+#rodape-content {
+    background-color: transparent !important;
+    color: #253900;
+    padding: 20px 0;
     text-align: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 0.9rem;
+    box-shadow: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 9999;
+    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.15);
 }
-.dicas ul {
-    list-style-type: disc;
-    padding-left: 20px;
+
+/* Aumenta visualmente o HUD da agenda (cabeçalho e filtros) */
+.container.py-5 > .text-center h1.fw-bold {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    font-weight: 900;
 }
-.dicas li {
-    margin-bottom: 8px;
-    font-size: 1rem;
-    line-height: 1.5;
+
+fieldset#agenda-dias-fieldset {
+    max-width: 900px;
+    margin: 0 auto 2rem auto;
+    padding: 20px;
+    border-radius: 15px;
+    background-color: #e6f2e6;
+    box-shadow: 0 4px 12px rgba(30, 65, 33, 0.2);
+}
+
+.dias-checkboxes label {
+    font-size: 1.1rem;
+    padding: 12px 14px;
+}
+
+select#especialidade {
+    font-size: 1.2rem;
+    padding: 12px 18px;
+    border-radius: 10px;
+    max-width: 400px;
+    margin: 0 auto 30px auto;
+    display: block;
+}
+
+.text-center > h2.fw-semibold {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    font-weight: 700;
+}
+
+#rodape-content a {
+    color: #253900;
+    text-decoration: none;
+}
+
+#rodape-content a:hover {
+    text-decoration: underline;
+}
+
+
+.triagem-inteligente-container {
+  background-color: #d9e6d9; 
+  border-radius: 12px;
+  padding: 30px;
+  max-width: 500px;
+  margin: 80px auto;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #1e4121; /* verde escuro */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.triagem-inteligente-container.centralizado {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.triagem-inteligente-container h1.titulo {
+  text-align: center;
+  color: #1e4121;
+  margin-bottom: 25px;
+  font-weight: 700;
+  font-size: 1.8rem;
+}
+
+.input-textarea {
+  width: 100%;
+  min-height: 120px;
+  padding: 14px 18px;
+  font-size: 18px;
+  border: 1px solid #6ca06c;
+  background-color: #f5fbf5;
+  border-radius: 8px;
+  resize: vertical;
+  margin-bottom: 20px;
+  transition: border-color 0.3s ease;
+  color: #1e4121;
+  font-weight: 500;
+}
+
+.input-textarea::placeholder {
+  color: #4e7a4e;
+  font-style: italic;
+}
+
+.input-textarea:focus {
+  outline: none;
+  border-color: #1e4121;
+  box-shadow: 0 0 5px rgba(30, 65, 33, 0.8);
+}
+
+.btn-primary {
+  background-color: #1e4121; /* verde escuro */
+  color: white;
+  border: none;
+  padding: 14px 30px;
+  font-size: 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 100%;
+  font-weight: 700;
+  transition: background-color 0.3s ease;
+  box-shadow: 0 2px 6px rgba(30, 65, 33, 0.7);
+}
+
+.btn-primary:hover {
+  background-color: #145214;
+  box-shadow: 0 4px 8px rgba(20, 82, 20, 0.9);
+}
+
+.triagem-resposta {
+  margin-top: 25px;
+  font-size: 20px;
+  color: #1e4121;
+  font-weight: 700;
+  padding: 12px 18px;
+  background-color: #f1f9f1;
+  border-radius: 8px;
+  min-height: 60px;
+  line-height: 1.5;
+  text-align: center;
+  box-shadow: inset 0 0 6px #b7d8b7;
 }

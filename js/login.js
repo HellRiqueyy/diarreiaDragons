@@ -47,7 +47,7 @@ async function doLogin(e){
             const sessionUser = { id: user.id, nome: user.nome || '', cpf: user.cpf || '', role: user.role };
             sessionStorage.setItem('user', JSON.stringify(sessionUser));
             if(user.role === 'medico') window.location.href = 'medico.html';
-            else window.location.href = 'agenda.html';
+            else window.location.href = 'index.html';
         } else {
             alert('CPF ou senha inválidos.');
         }
