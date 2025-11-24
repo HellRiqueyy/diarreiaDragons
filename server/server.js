@@ -97,7 +97,7 @@ app.post('/api/avaliacoes', (req, res) => {
 
 // Create or update medico by CPF
 app.post('/api/medicos', (req, res) => {
-  const { nome, cpf, telefone, especialidade, dias, horarios, email, crm, senha } = req.body;
+  const { nome, cpf, telefone, nomeClinica, enderecoClinica, especialidade, dias, horarios, email, crm, senha } = req.body;
   if(!cpf) return res.status(400).json({ error: 'cpf required' });
   // check if exists
   db.get('SELECT * FROM medicos WHERE cpf = ?', [cpf], (err, row) => {
@@ -108,13 +108,13 @@ app.post('/api/medicos', (req, res) => {
     const disponibilidadesStr = JSON.stringify(req.body.disponibilidades || []);
     if(row){
       // update
-      db.run('UPDATE medicos SET nome = ?, telefone = ?, especialidade = ?, dias = ?, horarios = ?, disponibilidadeSemanal = ?, disponibilidades = ?, email = ?, crm = ?, senha = ? WHERE cpf = ?', [nome, telefone, especialidade, diasStr, horariosStr, disponibilidadeSemanalStr, disponibilidadesStr, email || '', crm || '', senha || '', cpf], function(uerr){
+      db.run('UPDATE medicos SET nome = ?, telefone = ?, nomeClinica = ?, enderecoClinica = ?, especialidade = ?, dias = ?, horarios = ?, disponibilidadeSemanal = ?, disponibilidades = ?, email = ?, crm = ?, senha = ? WHERE cpf = ?', [nome, telefone, nomeClinica || '', enderecoClinica || '', especialidade, diasStr, horariosStr, disponibilidadeSemanalStr, disponibilidadesStr, email || '', crm || '', senha || '', cpf], function(uerr){
         if(uerr) return res.status(500).json({ error: 'db error' });
         return res.json({ updated: true });
       });
     } else {
       // insert
-      db.run('INSERT INTO medicos (nome, cpf, telefone, especialidade, dias, horarios, disponibilidadeSemanal, disponibilidades, senha) VALUES (?,?,?,?,?,?,?,?,?)', [nome, cpf, telefone, especialidade, diasStr, horariosStr, disponibilidadeSemanalStr, disponibilidadesStr, senha || ''], function(ierr){
+      db.run('INSERT INTO medicos (nome, cpf, telefone, nomeClinica, enderecoClinica, especialidade, dias, horarios, disponibilidadeSemanal, disponibilidades, senha) VALUES (?,?,?,?,?,?,?,?,?,?,?)', [nome, cpf, telefone, nomeClinica || '', enderecoClinica || '', especialidade, diasStr, horariosStr, disponibilidadeSemanalStr, disponibilidadesStr, senha || ''], function(ierr){
         if(ierr) return res.status(500).json({ error: 'db error' });
         return res.json({ id: this.lastID });
       });

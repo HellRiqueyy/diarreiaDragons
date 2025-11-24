@@ -6,6 +6,8 @@ function getInput(){
         nome: document.getElementById("nome"),
         cpf: document.getElementById("cpf"),
         telefone: document.getElementById("telefone"),
+        nomeClinica: document.getElementById("nomeClinica"),
+        enderecoClinica: document.getElementById("enderecoClinica"),
         crm: document.getElementById("upload-crm"),
         email: document.getElementById("email"),
         senha: document.getElementById("senha"),
@@ -16,11 +18,13 @@ function getInput(){
 } 
     
 
-    function getValores({cpf, telefone, nome, crm, email, senha, especialidade, dias, horarios}){
+    function getValores({cpf, telefone, nome, nomeClinica, enderecoClinica, crm, email, senha, especialidade, dias, horarios}){
         return {
             nome: nome.value.trim(),
             cpf: cpf.value.trim(),
             telefone: telefone.value.trim(),
+            nomeClinica: nomeClinica && nomeClinica.value ? nomeClinica.value.trim() : '',
+            enderecoClinica: enderecoClinica && enderecoClinica.value ? enderecoClinica.value.trim() : '',
             email: email.value.trim(),
             crm: (crm && crm.files && crm.files.length) ? crm.files[0].name : (crm && crm.value ? crm.value.trim() : ''),
             senha: senha.value.trim(),
@@ -106,6 +110,8 @@ document.addEventListener('DOMContentLoaded', ()=>{
                 crm: dados.crm,
                 senha: dados.senha,
                 especialidade: dados.especialidade,
+                nomeClinica: dados.nomeClinica || '',
+                enderecoClinica: dados.enderecoClinica || '',
                 dias: dados.dias || [],
                 horarios: dados.horarios || []
             };

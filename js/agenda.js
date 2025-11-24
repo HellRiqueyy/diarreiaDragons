@@ -95,6 +95,7 @@ function renderMedicosList(medicos){
 		card.style.width = '220px';
 		card.style.cursor = 'pointer';
 		// mostrar nome em destaque, especialidade abaixo, e média de avaliação
+		const clinic = m.nomeClinica ? `<div style="font-size:0.95rem;color:#444;margin-top:6px;">${m.nomeClinica}</div>` : '';
 		const avg = m.ratingAvg ? Number(m.ratingAvg) : 0;
 		const count = m.ratingCount || 0;
 		// cria estrelas visual
@@ -102,6 +103,7 @@ function renderMedicosList(medicos){
 		card.innerHTML = `
 			<div class="fw-bold" style="font-size:1.06rem;">${m.nome || '—'}</div>
 			<div style="font-size:0.95rem;color:#666">${m.especialidade || ''}</div>
+			${clinic}
 			<div style="margin-top:8px;">${starsHtml} <small style="color:#666;margin-left:6px;">(${count})</small></div>
 		`;
 

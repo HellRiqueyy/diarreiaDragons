@@ -15,6 +15,8 @@ db.serialize(() => {
     nome TEXT,
     cpf TEXT UNIQUE,
     telefone TEXT,
+    nomeClinica TEXT,
+    enderecoClinica TEXT,
     especialidade TEXT,
     dias TEXT,
     horarios TEXT,
@@ -57,6 +59,12 @@ db.serialize(() => {
     }
     if(!names.includes('disponibilidades')){
       db.run('ALTER TABLE medicos ADD COLUMN disponibilidades TEXT');
+    }
+    if(!names.includes('nomeClinica')){
+      db.run('ALTER TABLE medicos ADD COLUMN nomeClinica TEXT');
+    }
+    if(!names.includes('enderecoClinica')){
+      db.run('ALTER TABLE medicos ADD COLUMN enderecoClinica TEXT');
     }
   });
   // ensure paciente has email and senha columns (for existing DBs)

@@ -20,6 +20,10 @@ function renderMedicoCard(m){
     el('medico-nome').textContent = m.nome || '—';
     el('medico-espec').textContent = m.especialidade || '';
     el('medico-telefone').textContent = m.telefone || '';
+    const clinicName = m.nomeClinica || m.clinica || '';
+    const clinicAddr = m.enderecoClinica || m.endereco || '';
+    if(el('medico-clinica')) el('medico-clinica').textContent = clinicName;
+    if(el('medico-endereco')) el('medico-endereco').textContent = clinicAddr;
 }
 
 function renderHorarios(medico){
