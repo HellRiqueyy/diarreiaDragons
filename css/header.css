@@ -1,5 +1,5 @@
 .header-content {
-    background-color: #08CB00;
+    background: linear-gradient(90deg, #08CB00 70%, #CBD99B 100%);
     color: #f5f5f5;
     position: relative;
     max-width: 98.75rem;

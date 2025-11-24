@@ -13,33 +13,34 @@
 <body>
     <div id="header-content"></div>
 
-    
-    <div class="container">
-            <h1 class="tituloh"> Login </h1>
-            <input class="logs" id="cpf" type="text" placeholder="CPF" required>
-            <input class="logs" id="senha" type="password" placeholder="SENHA" required>
-            <button class="login_cliente" type="submit">Fazer Login</button>
-            <h3 class="tituloh">Não possui conta?</h3>
-            <button class="login_cliente"><a href="cadastroPaciente.html" style="text-decoration: none; color: white;">Cadastro</a></button>
-        </div>
 
-     
-        <div id="rodape-content"></div>
-        <script type="module" src="../js/login.js"></script>
-        <script>
-            async function loadHeader() {
-                const response = await fetch('../contents/header.html');
-                const headerHTML = await response.text();
-                document.getElementById('header-content').innerHTML = headerHTML;
-            }
-            loadHeader();
-            async function loadRodape() {
-                const response = await fetch('../contents/rodape.html');
-                const footerHTML = await response.text();
-                document.getElementById('rodape-content').innerHTML = footerHTML;
-            }
-            loadRodape();
-        </script>
+    <div class="container">
+        <h1 id="l"> Login </h1>
+        <input class="logs" id="cpf" type="text" placeholder="CPF" required>
+        <input class="logs" id="senha" type="password" placeholder="SENHA" required>
+        <button class="login_cliente" type="submit">Fazer Login</button>
+        <h3 class="tituloh">Não possui conta?</h3>
+        <button class="login_cliente"><a href="cadastroPaciente.html"
+                style="text-decoration: none; color: white;">Cadastro</a></button>
+    </div>
+
+
+    <div id="rodape-content"></div>
+    <script type="module" src="../js/login.js"></script>
+    <script>
+        async function loadHeader() {
+            const response = await fetch('../contents/header.html');
+            const headerHTML = await response.text();
+            document.getElementById('header-content').innerHTML = headerHTML;
+        }
+        loadHeader();
+        async function loadRodape() {
+            const response = await fetch('../contents/rodape.html');
+            const footerHTML = await response.text();
+            document.getElementById('rodape-content').innerHTML = footerHTML;
+        }
+        loadRodape();
+    </script>
 </body>
 
 </html>

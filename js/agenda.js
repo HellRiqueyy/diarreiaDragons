@@ -117,9 +117,18 @@ function renderMedicosList(medicos){
 				submitRating(m.id, score);
 				return;
 			}
-			// caso contrário, comportamento antigo: selecionar médico e abrir pagina de agendamento
+			// caso contrário, selecionar médico e abrir pagina de agendamento
 			try{
-				const minimal = { id: m.id, nome: m.nome || '', especialidade: m.especialidade || '', telefone: m.telefone || '', horarios: m.horarios || [], dias: m.dias || [] };
+				const minimal = {
+					id: m.id,
+					nome: m.nome || '',
+					especialidade: m.especialidade || '',
+					telefone: m.telefone || '',
+					nomeClinica: m.nomeClinica || m.clinica || '',
+					enderecoClinica: m.enderecoClinica || m.endereco || '',
+					horarios: m.horarios || [],
+					dias: m.dias || []
+				};
 				sessionStorage.setItem('selectedMedico', JSON.stringify(minimal));
 				window.location.href = 'cadastroConsulta.html?id=' + encodeURIComponent(m.id);
 			} catch(e){ console.error('Erro ao selecionar médico', e); }

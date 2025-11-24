@@ -5,7 +5,13 @@ function el(id){ return document.getElementById(id); }
 async function fetchMedicoById(id){
     try{
         const m = await getMedicoById(id);
-        return m ? m : null;
+        if (m) {
+            // Normalize clinic fields for rendering
+            m.nomeClinica = m.nomeClinica || m.clinica || '';
+            m.enderecoClinica = m.enderecoClinica || m.endereco || '';
+            return m;
+        }
+        return null;
     } catch(e){ console.error('Erro fetching medico', e); }
     return null;
 }
@@ -20,8 +26,9 @@ function renderMedicoCard(m){
     el('medico-nome').textContent = m.nome || '—';
     el('medico-espec').textContent = m.especialidade || '';
     el('medico-telefone').textContent = m.telefone || '';
-    const clinicName = m.nomeClinica || m.clinica || '';
-    const clinicAddr = m.enderecoClinica || m.endereco || '';
+    // Always use normalized fields
+    const clinicName = m.nomeClinica || '';
+    const clinicAddr = m.enderecoClinica || '';
     if(el('medico-clinica')) el('medico-clinica').textContent = clinicName;
     if(el('medico-endereco')) el('medico-endereco').textContent = clinicAddr;
 }
@@ -90,7 +97,7 @@ function renderRecomendacoes(medicos, currentId){
         card.innerHTML = `<div style="font-weight:600">${m.nome || '—'}</div><div style="font-size:0.9rem;color:#666">${m.especialidade || ''}</div><div style="margin-top:6px">${generateStarsHtml(m.ratingAvg)} <small style="color:#666">(${m.ratingCount||0})</small></div>`;
         card.addEventListener('click', ()=>{
             try{
-                sessionStorage.setItem('selectedMedico', JSON.stringify({ id: m.id, nome: m.nome, especialidade: m.especialidade, telefone: m.telefone, horarios: m.horarios||[], dias: m.dias||[] }));
+                sessionStorage.setItem('selectedMedico', JSON.stringify({ id: m.id, nome: m.nome, especialidade: m.especialidade, telefone: m.telefone, nomeClinica: m.nomeClinica || m.clinica || '', enderecoClinica: m.enderecoClinica || m.endereco || '', horarios: m.horarios||[], dias: m.dias||[] }));
                 // reload page to load the selected medico
                 window.location.href = 'cadastroConsulta.html?id=' + encodeURIComponent(m.id);
             } catch(e){ console.error('Erro ao selecionar recomendado', e); }
@@ -110,7 +117,10 @@ async function init(){
         if(id){ medico = await fetchMedicoById(id); }
     }
 
-    if(medico){
+    // Always normalize clinic fields for rendering
+    if (medico) {
+        medico.nomeClinica = medico.nomeClinica || medico.clinica || '';
+        medico.enderecoClinica = medico.enderecoClinica || medico.endereco || '';
         renderMedicoCard(medico);
         renderHorarios(medico);
         // carregar recomendações (outros médicos da mesma especialidade)

@@ -4,6 +4,11 @@ body {
 
 }
 
+.body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+}
+
 .input {
     width: 90%;
     margin-top: 15px;
@@ -144,7 +149,13 @@ fieldset.input>label:first-of-type {
     display: flex;
     flex-direction: column;
     align-items: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 
+}
+
+.container h2 {
+    font-size: 2rem;
+    margin-bottom: 10px;
 }
 
 .container h3 {
@@ -205,15 +216,24 @@ select {
 
 .card {
     background: #f7f7f9;
-    padding: 20px;
-    margin: 0 15px;
+    padding: 24px 20px 20px 20px;
+    margin: 0 15px 20px 15px;
     border-radius: 20px;
-    width: 250px;
-    height: 100px;
+    width: 270px;
+    min-height: 140px;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    box-shadow: 0 4px 18px rgba(30, 65, 33, 0.13);
+    border: 2px solid #CBD99B;
+    transition: box-shadow 0.2s, border-color 0.2s;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+}
+
+.card:hover {
+    box-shadow: 0 8px 32px rgba(30, 65, 33, 0.18);
+    border-color: #08CB00;
 }
 
 .card img {
@@ -476,17 +496,17 @@ select#especialidade {
     margin-top: 20px;
 }
 
-.text-img{
+.text-img {
     text-align: center;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-size: 1rem;
 }
 
-.text-img p{
+.text-img p {
     margin: 10px 10px 5px 10px;
 }
 
-.titulo{
+.titulo {
     text-align: center;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-size: 2.5rem;
@@ -499,3 +519,8 @@ select#especialidade {
     justify-content: center;
     align-items: center;
 }
+
+#l {
+    margin-left: 10%;
+}
+
