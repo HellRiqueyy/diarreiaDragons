@@ -1,5 +1,4 @@
-import { db } from './firebaseConfig.js';
-import { collection, addDoc } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
+import { createPaciente, getPacienteByCpf } from './api.js';
 
 
 function getInput(){
@@ -30,11 +29,24 @@ function getInput(){
         console.log("Dados", dados)
 
         try{
-            const ref = await addDoc(collection(db, "paciente"), dados)
-            console.log("ID do documento", ref.id)
+            const cpfDigits = (dados.cpf || '').replace(/\D/g,'');
+            if(!cpfDigits) return alert('CPF inválido');
+            // checar se já existe
+            try{
+                const existing = await getPacienteByCpf(cpfDigits);
+                if(existing && existing.cpf){
+                    return alert('Já existe um paciente cadastrado com este CPF.');
+                }
+            } catch(e){
+                // se 404, prosseguir; se outro erro, logar e tentar criar
+                if(!/404/.test(String(e))) console.warn('Erro ao verificar existencia do paciente (prosseguindo):', e);
+            }
+
+            await createPaciente({ nome: dados.nome, cpf: cpfDigits, telefone: dados.telefone, email: dados.email, senha: dados.senha });
             alert("Cadastro com sucesso")
         } catch (e){
             console.log("Erro", e)
+            alert('Erro ao cadastrar. Veja console.');
         }
 
     })

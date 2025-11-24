@@ -1,15 +1,13 @@
 
-import { db } from './firebaseConfig.js';
-import { collection, query, where, getDocs, orderBy, addDoc } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
+import { getMedicos, getAvaliacoesByMedicosIds, postAvaliacao } from './api.js';
 
 function el(id){ return document.getElementById(id); }
 
 async function fetchMedicosByEspecialidade(espec){
 	if(!espec) return [];
 	try{
-		const q = query(collection(db, 'medicos'), where('especialidade','==',espec));
-		const snap = await getDocs(q);
-		let medicos = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+		let medicos = await getMedicos(espec);
+		medicos = medicos || [];
 		// attach ratings (avg and count)
 		medicos = await attachRatings(medicos);
 		// sort by average rating desc
@@ -26,16 +24,7 @@ async function attachRatings(medicos){
 	const ids = medicos.map(m=>m.id);
 	let avals = [];
 	try{
-		if(ids.length <= 10){
-			const q = query(collection(db,'avaliacoes'), where('medicoId','in', ids));
-			const snap = await getDocs(q);
-			avals = snap.docs.map(d=> ({ id: d.id, ...d.data() }));
-		} else {
-			// fallback: fetch all avaliações and filter client-side
-			const snap = await getDocs(collection(db,'avaliacoes'));
-			avals = snap.docs.map(d=> ({ id: d.id, ...d.data() }));
-			avals = avals.filter(a=> ids.includes(a.medicoId));
-		}
+		avals = await getAvaliacoesByMedicosIds(ids);
 	} catch(e){ console.error('Erro buscando avaliacoes', e); }
 
 	const map = {};
@@ -55,7 +44,7 @@ async function attachRatings(medicos){
 
 async function submitRating(medicoId, score){
 	try{
-		await addDoc(collection(db,'avaliacoes'), { medicoId, score: Number(score), createdAt: new Date().toISOString() });
+		await postAvaliacao(medicoId, Number(score));
 		// refresh current list
 		await onEspecialidadeChange();
 		alert('Obrigado pela avaliação!');

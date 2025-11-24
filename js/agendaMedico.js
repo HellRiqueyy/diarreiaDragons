@@ -1,5 +1,4 @@
-import { db } from './firebaseConfig.js';
-import { doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
+import { getMedicoById, createMedico } from './api.js';
 
 const weekdays = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
 let currentMedicoId = null;
@@ -98,9 +97,8 @@ async function loadAgenda(medicoId){
 	const container = document.getElementById('agenda-container');
 	if(!container) return;
 	try{
-		const ref = doc(db, 'medicos', medicoId);
-		const snap = await getDoc(ref);
-		const semanal = (snap.exists() && snap.data().disponibilidadeSemanal) || {};
+		const m = await getMedicoById(medicoId);
+		const semanal = (m && m.disponibilidadeSemanal) || {};
 		renderAgenda(container, semanal);
 	}catch(err){
 		console.error('Erro ao carregar agenda', err);
@@ -116,7 +114,12 @@ async function saveAgenda(){
 	const agenda = readAgendaFromUI(container);
 	try{
 		if(status) status.textContent = 'Salvando...';
-		await setDoc(doc(db, 'medicos', currentMedicoId), { disponibilidadeSemanal: agenda }, { merge: true });
+		// enviar para API (createMedico atua como upsert por CPF, mas aqui usamos id)
+		// buscar medico atual para obter cpf e outros campos
+		const med = await getMedicoById(currentMedicoId);
+		const payload = Object.assign({}, med, { disponibilidadeSemanal: agenda });
+		// garantir payload.cpf presente; servidor faz upsert por cpf
+		await createMedico(payload);
 		if(status) status.textContent = 'Salvo.';
 		setTimeout(()=>{ if(status) status.textContent=''; },1200);
 	}catch(err){

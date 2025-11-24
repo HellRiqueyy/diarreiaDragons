@@ -13,10 +13,11 @@ Aplicação web para permitir que pacientes encontrem médicos por especialidade
 
 ## Tecnologias utilizadas
 
-* HTML5
-* CSS
-* JavaScript
-* Firebase
+- HTML5
+- CSS
+- JavaScript
+- Node.js + Express (backend)
+- SQLite3 (banco local) — substituiu o uso anterior do Firebase/Firestore
 
 ## Estrutura do projeto
 - `index.html` – landing page

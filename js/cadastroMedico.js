@@ -1,5 +1,4 @@
-import { db } from './firebaseConfig.js';
-import { doc, setDoc } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
+import { createMedico } from './api.js';
 
 
 function getInput(){
@@ -96,22 +95,21 @@ document.addEventListener('DOMContentLoaded', ()=>{
         console.log("Dados", dados)
 
         try{
-            // usa o CPF (apenas dígitos) como ID do documento
-            const cpfDigits = dados.cpf.replace(/\D/g, '');
+            // preparar payload e enviar para API
+            const cpfDigits = (dados.cpf || '').replace(/\D/g, '');
             if(!cpfDigits) return alert('CPF inválido');
-            const docRef = doc(db, 'medicos', cpfDigits);
-            // salvar dados básicos e as preferências de disponibilidade
             const payload = {
                 nome: dados.nome,
                 cpf: cpfDigits,
                 telefone: dados.telefone,
                 email: dados.email,
                 crm: dados.crm,
+                senha: dados.senha,
                 especialidade: dados.especialidade,
                 dias: dados.dias || [],
                 horarios: dados.horarios || []
             };
-            await setDoc(docRef, payload, { merge: true });
+            await createMedico(payload);
             alert('Cadastro com sucesso');
         } catch (e){
             console.log("Erro", e)

@@ -1,5 +1,4 @@
-import { db } from './firebaseConfig.js';
-import { doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
+import { getMedicoById, createMedico } from './api.js';
 
 // Pequeno helper para formatar YYYY-MM-DD
 function formatDateISO(date) {
@@ -82,13 +81,8 @@ async function loadAvailability(medicoId) {
   currentMedicoId = medicoId;
   selectedDates = new Set();
   try {
-    const ref = doc(db, 'medicos', medicoId);
-    const snap = await getDoc(ref);
-    if (snap.exists()) {
-      const data = snap.data();
-      const arr = data.disponibilidades || [];
-      arr.forEach(d => selectedDates.add(d));
-    }
+    const m = await getMedicoById(medicoId);
+    if(m){ const arr = m.disponibilidades || []; arr.forEach(d => selectedDates.add(d)); }
   } catch (err) {
     console.error('Erro ao carregar disponibilidade', err);
     alert('Erro ao carregar disponibilidade');
@@ -100,9 +94,10 @@ async function loadAvailability(medicoId) {
 async function saveAvailability(medicoId) {
   if (!medicoId) return;
   try {
-    const ref = doc(db, 'medicos', medicoId);
+    const med = await getMedicoById(medicoId);
     const arr = Array.from(selectedDates).sort();
-    await setDoc(ref, { disponibilidades: arr }, { merge: true });
+    const payload = Object.assign({}, med, { disponibilidades: arr });
+    await createMedico(payload);
   } catch (err) {
     console.error('Erro ao salvar disponibilidade', err);
   }

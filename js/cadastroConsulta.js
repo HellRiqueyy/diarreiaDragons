@@ -1,12 +1,11 @@
-import { db } from './firebaseConfig.js';
-import { collection, addDoc, doc, getDoc, query, where, getDocs } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
+import { getMedicoById, getMedicos, getAvaliacoesByMedicosIds, checkConsultaExists, createConsulta } from './api.js';
 
 function el(id){ return document.getElementById(id); }
 
 async function fetchMedicoById(id){
     try{
-        const d = await getDoc(doc(db, 'medicos', id));
-        if(d && d.exists()) return { id: d.id, ...d.data() };
+        const m = await getMedicoById(id);
+        return m ? m : null;
     } catch(e){ console.error('Erro fetching medico', e); }
     return null;
 }
@@ -48,9 +47,8 @@ function renderHorarios(medico){
 async function fetchMedicosByEspecialidade(espec){
     if(!espec) return [];
     try{
-        const q = query(collection(db, 'medicos'), where('especialidade','==',espec));
-        const snap = await getDocs(q);
-        return snap.docs.map(d=> ({ id: d.id, ...d.data() }));
+        const med = await getMedicos(espec);
+        return med || [];
     } catch(e){ console.error('Erro buscando medicos por especialidade', e); return []; }
 }
 
@@ -59,15 +57,7 @@ async function attachRatings(medicos){
     const ids = medicos.map(m=>m.id);
     let avals = [];
     try{
-        if(ids.length <= 10){
-            const q = query(collection(db,'avaliacoes'), where('medicoId','in', ids));
-            const snap = await getDocs(q);
-            avals = snap.docs.map(d=> ({ id: d.id, ...d.data() }));
-        } else {
-            const snap = await getDocs(collection(db,'avaliacoes'));
-            avals = snap.docs.map(d=> ({ id: d.id, ...d.data() }));
-            avals = avals.filter(a=> ids.includes(a.medicoId));
-        }
+        avals = await getAvaliacoesByMedicosIds(ids);
     } catch(e){ console.error('Erro ao buscar avaliacoes', e); }
     const map = {};
     avals.forEach(a=>{ if(!map[a.medicoId]) map[a.medicoId] = { sum:0, count:0 }; map[a.medicoId].sum += (a.score||0); map[a.medicoId].count += 1; });
@@ -152,19 +142,22 @@ async function init(){
 
         try{
             // verificar se já existe uma consulta para mesmo médico, data e horário
-            const q = query(collection(db, 'consultas'), where('medicoId','==', medicoId), where('date','==', date), where('time','==', hora));
-            const existing = await getDocs(q);
-            if(existing && !existing.empty){
+            const existsRes = await checkConsultaExists(medicoId, date, hora);
+            if(existsRes && existsRes.exists){
                 alert('Esse horário já foi reservado para este médico. Escolha outro horário.');
                 return;
             }
 
-            const ref = await addDoc(collection(db, 'consultas'), consultaObj);
-            alert('Agendamento confirmado.');
-            // limpar seleção de consulta armazenada
-            sessionStorage.removeItem('selectedConsulta');
-            // redirecionar de volta à agenda
-            window.location.href = 'agenda.html';
+            const ref = await createConsulta(consultaObj);
+            if(ref && ref.id){
+                alert('Agendamento confirmado.');
+                // limpar seleção de consulta armazenada
+                sessionStorage.removeItem('selectedConsulta');
+                // redirecionar de volta à agenda
+                window.location.href = 'agenda.html';
+            } else {
+                throw new Error('Erro no servidor ao criar consulta');
+            }
         } catch(e){ console.error('Erro salvando consulta', e); alert('Erro ao salvar agendamento.'); }
     });
 }
