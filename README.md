@@ -80,11 +80,6 @@ SELECT id,nome,cpf,telefone,email FROM paciente ORDER BY id DESC LIMIT 10;
 .exit
 ```
 
-## Observações de segurança
-
-- Senhas são atualmente armazenadas em texto plano. Para produção, implemente hashing (ex.: `bcrypt`) antes de salvar e compare hashes no login.
-
-
 
 ## Diagrama ER
 https://app.brmodeloweb.com/#!/publicview/69211eec39eddf537c9b01f8
