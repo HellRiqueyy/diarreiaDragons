@@ -103,4 +103,5 @@ verificar os horários disponiveis e marcar qual se encaixa melhor em sua rotina
 - Henrique de Lima
 - Henrique da Silva
 - Nicolas Fernandes
+- Wesley Minto
 - Pedro Arthur
